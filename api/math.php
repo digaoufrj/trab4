@@ -36,11 +36,9 @@
                 $adjustedValue = $totalPaid / (pow(1+$interestRate, $periods));
                 return $adjustedValue;
             }
-        ?>
 
-        <?php
-            $periods = $_GET["np"]; // number of periods
-            $interestRate = $_GET["tax"]/100; // monthly interest rate
+            $periods = $_GET["np"];
+            $interestRate = $_GET["tax"]/100;
             $loanAmount = $_GET["pv"];
             $finalValue = $_GET["pp"];
             $valueToReturn = $_GET["pb"];
