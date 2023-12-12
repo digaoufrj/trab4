@@ -1,59 +1,89 @@
-td {
-    text-align: center;
-    width: 120px;
-  }
-  
-  
-  #titulo_tabela {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  #nomes_colunas {
-    border: 1px solid;
-  }
-  
-  #tabela {
-    align-items: center;
-    padding: 10px;
-    color: white;
-  }
-  
-  #titulo {
-    font-weight: bold;
+body {
+    background-color: #f0f0f2;
+    margin: 0;
+    padding: 2em;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont,
+        "Segoe UI", "Open Sans", "Helvetica Neue", Helvetica, Arial,
+        sans-serif;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.draggable {
+    border: 1px solid #ddd;
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.draggable legend {
     font-size: 24px;
-    margin-top: 70px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.box {
+    background-color: antiquewhite;
+    box-shadow: 8px 8px 6px grey;
+    width: 450px;
+    border: 3px solid lightblue;
+    padding: 10px;
+    margin-left: 2px;
+}
+
+form {
+    margin-top: 20px;
+}
+
+.input-group-addon {
+    color: antiquewhite;
+}
+
+.input-group-addon, label {
+    width: 190px;
+    float: left;
+}
+
+.input-group-addon, input {
+    margin: 10px 3px 10px 3px;
+    border: 1px solid grey;
+    border-radius: 5px;
+    font-size: 12px;
+    padding: 5px;
+}
+
+#submitButton {
+    width: 120px;
+    margin-left: 20px;
+}
+
+.messages {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.tabela-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid white;
+    padding: 12px;
+    text-align: center;
+}
+
+th {
+    background-color: #4CAF50;
     color: white;
-  }
-  
-  #tabelaBody {
-    margin: 20px;
-  }
-
-  /* Estilizando a tabela */
-#resultado1 table {
-    border-collapse: collapse;
-    width: 100%;
-    margin-top: 20px;
-}
-
-#resultado1 th, #resultado1 td {
-    border: 1px solid white;
-    padding: 8px;
-    text-align: center;
-}
-
-/* Estilizando a tabela de amortização */
-#resultado2 table {
-    border-collapse: collapse;
-    width: 100%;
-    margin-top: 20px;
-}
-
-#resultado2 th, #resultado2 td {
-    border: 1px solid white;
-    padding: 8px;
-    text-align: center;
 }
