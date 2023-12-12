@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="pt" xml:lang="pt" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Resultado</title>
+    <title>Result</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="..\estiloCSS\styleResultado.css">
+    <link rel="stylesheet" href="..\estiloCSS\styleResult.css">
 </head>
 
 <body>
@@ -13,125 +13,125 @@
 
         <?php 
          
-            function Calcular_PrestacaoMensal($valorFinanciado, $t, $p) {
-                $e = -1 * ($p);
-                $numerador = ($valorFinanciado * $t);
-                $denominador = (1 - pow(1 + $t, $e));
-                $prestacao = $numerador / $denominador;
-                return $prestacao;
+            function calculateMonthlyInstallment($loanAmount, $interestRate, $periods) {
+                $exponent = -1 * ($periods);
+                $numerator = ($loanAmount * $interestRate);
+                $denominator = (1 - pow(1 + $interestRate, $exponent));
+                $installment = $numerator / $denominator;
+                return $installment;
             }
 
-            function Calcular_CoeficienteFinanciamento($t, $p){
-                $CF = ($t * pow(1 + $t, $p)) / (pow(1 + $t, $p) - 1);
-                return $CF;
+            function calculateLoanCoefficient($interestRate, $periods){
+                $loanCoefficient = ($interestRate * pow(1 + $interestRate, $periods)) / (pow(1 + $interestRate, $periods) - 1);
+                return $loanCoefficient;
             }
 
-            function Calcular_ValorPago($valorFinanciado, $t, $p){
-                $prestacao = Calcular_PrestacaoMensal($valorFinanciado, $t, $p);
-                $valor_pago = $prestacao*$p;
-                return $valor_pago;
+            function calculateTotalPayment($loanAmount, $interestRate, $periods){
+                $installment = calculateMonthlyInstallment($loanAmount, $interestRate, $periods);
+                $totalPayment = $installment * $periods;
+                return $totalPayment;
             }
 
-            function Calcular_ValorCorrigido($valorPago, $t, $p){
-                $valorCorrigido = $valorPago / (pow(1+$t, $p));
-                return $valorCorrigido;
+            function calculateAdjustedValue($totalPaid, $interestRate, $periods){
+                $adjustedValue = $totalPaid / (pow(1+$interestRate, $periods));
+                return $adjustedValue;
             }
         ?>
 
         <?php
-            $p = $_GET["np"]; // parcelamento
-            $t = $_GET["tax"]/100; // taxa mensal de juros
-            $valorFinanciado = $_GET["pv"];
-            $valorFinal = $_GET["pp"];
-            $valorVoltar = $_GET["pb"];
-            $mesVoltar = $_GET["mm"];
+            $periods = $_GET["np"]; // number of periods
+            $interestRate = $_GET["tax"]/100; // monthly interest rate
+            $loanAmount = $_GET["pv"];
+            $finalValue = $_GET["pp"];
+            $valueToReturn = $_GET["pb"];
+            $monthsToReturn = $_GET["mm"];
             
-            $prestacao = Calcular_PrestacaoMensal($valorFinanciado, $t, $p);
-            $CF = Calcular_CoeficienteFinanciamento($t, $p);
-            $valorPago = Calcular_ValorPago($valorFinanciado, $t, $p);
-            $valorCorrigido = Calcular_ValorCorrigido($valorPago, $t, $p);
+            $installment = calculateMonthlyInstallment($loanAmount, $interestRate, $periods);
+            $loanCoefficient = calculateLoanCoefficient($interestRate, $periods);
+            $totalPayment = calculateTotalPayment($loanAmount, $interestRate, $periods);
+            $adjustedValue = calculateAdjustedValue($totalPayment, $interestRate, $periods);
 
-            $treal = 3.8956;
+            $realInterestRate = 3.8956;
 
-            $taxa = number_format($t * 100, 2);
-            $t_anual = (1 + (pow(1 + $t, 12) - 1)) - 1;
-            $t_anual = number_format($t_anual * 100, 2);
-            $vFinanciado = number_format($valorFinanciado, 2);
-            $vFinal = number_format($valorFinal, 2);
-            $vVoltar = number_format($valorVoltar, 2);
+            $interestRateFormatted = number_format($interestRate * 100, 2);
+            $annualInterestRate = (1 + (pow(1 + $interestRate, 12) - 1)) - 1;
+            $annualInterestRateFormatted = number_format($annualInterestRate * 100, 2);
+            $loanAmountFormatted = number_format($loanAmount, 2);
+            $finalValueFormatted = number_format($finalValue, 2);
+            $valueToReturnFormatted = number_format($valueToReturn, 2);
 
-            $prestacao_box2 = number_format($prestacao, 2);
-            $CF_box2 = number_format($CF, 6);
-            $vPago = number_format($valorPago, 2);
-            $treal_box2 = number_format($treal, 4);
-            $vCorrigido = number_format($valorCorrigido, 2);
+            $installmentBox2Formatted = number_format($installment, 2);
+            $loanCoefficientBox2Formatted = number_format($loanCoefficient, 6);
+            $totalPaidFormatted = number_format($totalPayment, 2);
+            $realInterestRateBox2Formatted = number_format($realInterestRate, 4);
+            $adjustedValueFormatted = number_format($adjustedValue, 2);
 
-            echo <<< Resultado1
+            echo <<< Result1
             <div class="boxes">
                 <div id="box1">
-                    <p id="output">Parcelamento: $p </p>
-                    <p id="output">Taxa: $taxa% ao mês = $t_anual% ao ano</p>
-                    <p id="output">Valor Financiado: $$vFinanciado </p>
-                    <p id="output">Valor Final: $$vFinal </p>
-                    <p id="output">Valor a Voltar: $$vVoltar </p>
-                    <p id="output">Entrada: False </p>
-                    <p id="output">Meses a voltar: $mesVoltar </p>
+                    <p id="output">Number of Periods: $periods </p>
+                    <p id="output">Interest Rate: $interestRateFormatted% per month = $annualInterestRateFormatted% per year</p>
+                    <p id="output">Loan Amount: $$loanAmountFormatted </p>
+                    <p id="output">Final Value: $$finalValueFormatted </p>
+                    <p id="output">Value to Return: $$valueToReturnFormatted </p>
+                    <p id="output">Down Payment: False </p>
+                    <p id="output">Months to Return: $monthsToReturn </p>
                 </div>
                 
                 <div id="box2">
-                    <p id="output">Prestação: $$prestacao_box2 ao mês</p>
-                    <p id="output">Coeficiente de Financiamento: $$CF_box2 </p>
-                    <p id="output">Valor Pago: $$vPago</p>
-                    <p id="output">Taxa Real: $treal_box2% ao mês</p>
-                    <p id="output">Valor Corrigido: $$vCorrigido</p>
+                    <p id="output">Monthly Installment: $$installmentBox2Formatted per month</p>
+                    <p id="output">Loan Coefficient: $$loanCoefficientBox2Formatted </p>
+                    <p id="output">Total Paid: $$totalPaidFormatted</p>
+                    <p id="output">Real Interest Rate: $realInterestRateBox2Formatted% per month</p>
+                    <p id="output">Adjusted Value: $$adjustedValueFormatted</p>
                 </div>
             </div>
-            Resultado1;
+            Result1;
         ?>
 
         <?php
-            function gerarTabelaPrice($valorFinanciado, $taxaJurosMensal, $numParcelas) {
-                $prestacaoMensal = ($valorFinanciado * $taxaJurosMensal) / (1 - pow(1 + $taxaJurosMensal, -$numParcelas));
+            function generateAmortizationTable($loanAmount, $monthlyInterestRate, $numPeriods) {
+                $monthlyPayment = ($loanAmount * $monthlyInterestRate) / (1 - pow(1 + $monthlyInterestRate, -$numPeriods));
 
-                $saldoDevedor = $valorFinanciado;
+                $remainingBalance = $loanAmount;
 
-                $prestacaoMensalTotal = 0;
-                $JurosTotal = 0;
-                $amortizacaoTotal = 0;
+                $totalMonthlyPayment = 0;
+                $totalInterest = 0;
+                $totalPrincipal = 0;
 
-                echo "<p id='titulo'>Tabela Price</p>";
+                echo "<p id='title'>Amortization Table</p>";
                 echo "<table border='1'>";
-                echo "<tr><th>Mês</th><th>Prestação</th><th>Juros</th><th>Amortização</th><th>Saldo Devedor</th></tr>";
+                echo "<tr><th>Month</th><th>Monthly Payment</th><th>Interest</th><th>Principal</th><th>Remaining Balance</th></tr>";
 
-                for ($mes = 1; $mes <= $numParcelas; $mes++) {
-                    $juros = $saldoDevedor * $taxaJurosMensal;
-                    $amortizacao = $prestacaoMensal - $juros;
-                    $saldoDevedor -= $amortizacao;
-                    $prestacaoMensalTotal += $prestacaoMensal;
-                    $JurosTotal += $juros;
-                    $amortizacaoTotal += $amortizacao;
+                for ($month = 1; $month <= $numPeriods; $month++) {
+                    $interest = $remainingBalance * $monthlyInterestRate;
+                    $principal = $monthlyPayment - $interest;
+                    $remainingBalance -= $principal;
+                    $totalMonthlyPayment += $monthlyPayment;
+                    $totalInterest += $interest;
+                    $totalPrincipal += $principal;
 
                     echo "<tr>";
-                    echo "<td>$mes</td>";
-                    echo "<td>" . number_format($prestacaoMensal, 2) . "</td>";
-                    echo "<td>" . number_format($juros, 2) . "</td>";
-                    echo "<td>" . number_format($amortizacao, 2) . "</td>";
-                    echo "<td>" . number_format($saldoDevedor, 2) . "</td>";
+                    echo "<td>$month</td>";
+                    echo "<td>" . number_format($monthlyPayment, 2) . "</td>";
+                    echo "<td>" . number_format($interest, 2) . "</td>";
+                    echo "<td>" . number_format($principal, 2) . "</td>";
+                    echo "<td>" . number_format($remainingBalance, 2) . "</td>";
                     echo "</tr>";
                 }   
 
                 echo "<tr>";
                 echo "<td>Total</td>";
-                echo "<td>" . number_format($prestacaoMensalTotal, 2) . "</td>";
-                echo "<td>" . number_format($JurosTotal, 2) . "</td>";
-                echo "<td>" . number_format($amortizacaoTotal, 2) . "</td>";
-                echo "<td>" . number_format($saldoDevedor, 2) . "</td>";
+                echo "<td>" . number_format($totalMonthlyPayment, 2) . "</td>";
+                echo "<td>" . number_format($totalInterest, 2) . "</td>";
+                echo "<td>" . number_format($totalPrincipal, 2) . "</td>";
+                echo "<td>" . number_format($remainingBalance, 2) . "</td>";
                 echo "</tr>";
                 
                 echo "</table>";
             }
 
-            gerarTabelaPrice($valorFinanciado, $t, $p);
+            generateAmortizationTable($loanAmount, $interestRate, $periods);
         ?>
         
     </main>
